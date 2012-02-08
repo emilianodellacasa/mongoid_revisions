@@ -27,6 +27,7 @@ This gem adds to your Mongoid document the following attributes:
 
 - revision
 - tag
+- token
 
 ## Development
 
