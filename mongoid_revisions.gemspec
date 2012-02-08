@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec', '~> 2.8.0'
   s.add_development_dependency 'mongoid', '~> 2.4.2'
-
+  s.add_development_dependency 'bson_ext', '~> 1.5.2'
 end
