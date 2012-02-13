@@ -65,7 +65,7 @@ describe Mongoid::Revisions do
 
 	describe "when I want a new revision" do
 		before :all do
-			@project.revise
+			@new_revised_project = @project.revise
 		end
 
 		it "has 2 revisions" do
@@ -78,6 +78,10 @@ describe Mongoid::Revisions do
 
 		it "last revision is at revision 1" do
 			@project.revisions.last.revision.should==1
+		end
+
+		it "returned object should be last revision" do
+			@project.revisions.last.should==@new_revised_project
 		end
 
 		it "last revision has the default tag" do

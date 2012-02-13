@@ -48,6 +48,7 @@ module Mongoid
             new_child.save
           end
         end
+				new_revision
 	    end
 
   	  protected
