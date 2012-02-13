@@ -34,6 +34,7 @@ and the following methods:
 - revisions
 - tag_version
 - revise
+- branch
 
 Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library.
 
