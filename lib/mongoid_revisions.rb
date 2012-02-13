@@ -33,25 +33,34 @@ module Mongoid
 
 			# CREATE A NEW REVISION FOR THE DOCUMENT
 			def revise
-				new_revision = self.class.create self.attributes.except("_id")
-				new_revision._token = self.token
-				new_revision._revision = (self.revision || 1) + 1
-				new_revision.tag = "#{new_revision.revision}.0.0"
-				new_revision.save
-				self.relations.each do |relation|
+				self._revise_or_branch((self.revision || 1) + 1,self.token)
+	    end
+
+			# CREATE A NEW BRANCH 
+			def branch
+				self._revise_or_branch(0)
+			end
+
+  	  protected
+
+			def _revise_or_branch(revision,token=nil)
+				new = self.class.create self.attributes.except("_id")
+        new._token = token
+        new._revision = revision
+				new.tag = "#{new.revision}.0.0"
+        new.save
+        self.relations.each do |relation|
           metadata = self.class.reflect_on_association(relation[0])
           metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
             new_child = metadata.class_name.constantize.create child.attributes.except("_id")
             new_child.revision = child.revision+1
             new_child.tag = "#{new_child.revision}.0.0"
-						new_child[metadata.foreign_key.to_sym]=new_revision.id
+            new_child[metadata.foreign_key.to_sym]=new.id
             new_child.save
           end
         end
-				new_revision
-	    end
-
-  	  protected
+        new
+			end
 
 			def _revision=(rev)
 				self[:revision]=rev

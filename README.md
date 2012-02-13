@@ -43,7 +43,15 @@ Simply call the revise method
 	last_comment_revision=@comment.revise
  ```
 
-to create a new revision for a document. Please note that the original object will be unchanged!
+to create a new revision for a document. Please note that the original object will be unchanged! 
+
+To create a new branch of a given document, use
+
+```ruby
+  new_comment=@comment.branch
+ ```
+
+and the returned document will have a different token and will be at revision 0.
 
 To access all revisitons for a givent document, use
 
@@ -61,8 +69,8 @@ to change the tag attribute of the document and save it in a single call.
 
 ## Future changes (sort of TODO list)
 
+- Check if linked relations cloning work for all relation's tipologies
 - Recursive revision to linked documents
-- Branching to create a new document at revision a 0 and with a token different from the original
 
 ## Development
 

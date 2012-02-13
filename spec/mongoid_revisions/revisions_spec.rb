@@ -97,7 +97,6 @@ describe Mongoid::Revisions do
 		end
 
     it "last revision has a single milestone" do
-			#puts @project.revisions.last.inspect
 			@project.revisions.last.milestones.count.should==1
     end
   end
@@ -109,6 +108,28 @@ describe Mongoid::Revisions do
 				@project.revise
 			end
 			@project.revisions.count.should==(count+2)
+		end
+	end
+
+	describe "when I want a new branch" do
+    before :all do
+      @new_project = @project.branch
+    end
+
+		it "should be at revision 0" do
+			@new_project.revision.should==0
+		end
+
+		it "should change token" do
+			@new_project.token.should_not==@project.token
+		end
+	
+		it "should have 1 milestone" do
+			@new_project.milestones.count.should==1
+		end
+
+		it "should have 1 revision" do
+			@new_project.revisions.count.should==1
 		end
 	end
 end
