@@ -1,9 +1,9 @@
-class Project
+class Milestone
   include Mongoid::Document
   include Mongoid::Revisions
 
-  field :name  
+  field :description 
 
-  has_many :milestones
+  belongs_to :project
 
 end
