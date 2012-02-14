@@ -41,7 +41,7 @@ Token is a randomly generated string that is common to all revisions of the same
 Simply call the revise method
 
  ```ruby
-	last_comment_revision=@comment.revise
+	last_comment_revision = @comment.revise
  ```
 
 to create a new revision for a document. Please note that the original object will be unchanged! 
@@ -49,7 +49,7 @@ to create a new revision for a document. Please note that the original object wi
 To create a new branch of a given document, use
 
 ```ruby
-  new_comment=@comment.branch
+  new_comment = @comment.branch
  ```
 
 and the returned document will have a different token and will be at revision 0.
@@ -72,6 +72,9 @@ to change the tag attribute of the document and save it in a single call.
 
 - Check if linked relations cloning work for all relation's tipologies
 - Recursive revision to linked documents
+- Add index on token attribute
+- Add methods to access a particular revision or tag
+- Add search method for revision and tag
 
 ## Development
 
