@@ -9,6 +9,8 @@ module Mongoid
 				field :tag, :type => String, :default => "0.0.0"
 				field :token, :type => String
 
+				index :token
+
 				set_callback :create, :before, :create_unique_token
 			end
 

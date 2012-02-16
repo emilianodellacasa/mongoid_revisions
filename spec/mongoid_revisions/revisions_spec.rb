@@ -42,6 +42,10 @@ describe Mongoid::Revisions do
 			@project.token="ciccio"
 			@project.token.should_not=="ciccio"
 		end
+
+		it "should have a index on token" do
+			Project.index_options.count.should==1
+		end
 	end 
 
   
