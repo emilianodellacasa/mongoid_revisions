@@ -38,7 +38,8 @@ To add support for revisions to a Mongoid documents, include the module to your 
 
 ### Token Field
 
-Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library. 
+Token is a randomly generated string that is common to all revisions of the same document and it is write protected to preserve the functionality of this library. 
+
 An index is automatically added to this field but to apply it you will have to issue the following command
 
  ```ruby
@@ -69,7 +70,7 @@ and the returned document will have a different token and will be at revision 0.
 
 ### Get all document's revisions
 
-To access all revisitons for a givent document, use
+To access all revisions for a given document, use
 
  ```ruby
   @comment.revisions
