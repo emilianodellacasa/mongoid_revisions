@@ -36,7 +36,17 @@ and the following methods:
 - revise
 - branch
 
-Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library.
+### Token Field
+
+Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library. An index is automatically added to this field but to apply it you will have to issue the following command
+
+ ```ruby
+  rake db:mongoid:create_indexes
+ ```
+
+like all mongoid indexes.
+
+### Create a new revision
 
 Simply call the revise method
 
@@ -44,7 +54,9 @@ Simply call the revise method
 	last_comment_revision = @comment.revise
  ```
 
-to create a new revision for a document. Please note that the original object will be unchanged! 
+Please note that the original object will be unchanged! 
+
+### Create a new branch
 
 To create a new branch of a given document, use
 
@@ -54,11 +66,15 @@ To create a new branch of a given document, use
 
 and the returned document will have a different token and will be at revision 0.
 
+### Get all document's revisions
+
 To access all revisitons for a givent document, use
 
  ```ruby
   @comment.revisions
  ```
+
+### Tag a revision
 
 Lastly, to modify a revision with a given tag, use
 
@@ -72,7 +88,6 @@ to change the tag attribute of the document and save it in a single call.
 
 - Check if linked relations cloning work for all relation's tipologies
 - Recursive revision to linked documents
-- Add index on token attribute
 - Add methods to access a particular revision or tag
 - Add search method for revision and tag
 
