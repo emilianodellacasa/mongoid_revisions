@@ -23,13 +23,18 @@ To add support for revisions to a Mongoid documents, include the module to your 
  end
  ```
 
+### Added Attributes
+
 This gem adds to your Mongoid document the following attributes:
 
 - revision (read only)
 - tag
 - token (read only)
 
-and the following methods:
+
+### Added Methods
+
+This gem adds to your Mongoid document the following methods:
 
 - revisions
 - tag_version
@@ -38,7 +43,8 @@ and the following methods:
 
 ### Token Field
 
-Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library. An index is automatically added to this field but to apply it you will have to issue the following command
+Token is a randomly generated string that is common to all revisions of the same document and it is wirte protected to preserve the functionality of this library. 
+An index is automatically added to this field but to apply it you will have to issue the following command
 
  ```ruby
   rake db:mongoid:create_indexes
