@@ -25,16 +25,11 @@ To add support for revisions to a Mongoid documents, include the module to your 
 
 ### Added Attributes
 
-This gem adds to your Mongoid document the following attributes:
-
 - revision (read only)
 - tag
 - token (read only)
 
-
 ### Added Methods
-
-This gem adds to your Mongoid document the following methods:
 
 - revisions
 - tag_version
