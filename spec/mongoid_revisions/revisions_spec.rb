@@ -2,9 +2,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mongoid::Revisions do
 	before :all do
-		Project.delete_all
-		@project = Project.create!(:name=>"My first project")
+		@user = User.create!(:username=>"teddy")
+		@project = Project.create!(:name=>"My first project",:user_id=>@user.id)
 		@project.milestones.create!(:description=>"First Milestone")
+		@project.create_configuration(:directory_name=>"/opt/project")
+		@project.notes.create!(:text=>"This is a note")
+		@project.create_version(:description=>"1.0.0")
+		@project.teams.create(:name=>"Team A")
 	end
 
 	context "just created" do
@@ -32,6 +36,18 @@ describe Mongoid::Revisions do
 		it "has a single milestone" do
 			@project.milestones.count==1
 		end
+
+		it "has a single note" do
+      @project.notes.count==1
+    end
+
+		it "has a single team" do
+			@project.teams.count==1
+		end
+
+		it "has a single configuration" do
+      @project.configuration.should_not be_nil
+    end
 
 		it "does not allow modification to its revision" do
 			@project.revision=56
@@ -65,6 +81,14 @@ describe Mongoid::Revisions do
 		it "has a single milestone" do
 			@project.milestones.count==1
 		end
+
+		it "has a single note" do
+      @project.notes.count==1
+    end
+
+		it "has a single version" do
+      @project.version.should_not be_nil
+    end
 	end
 
 	describe "when I want a new revision" do
@@ -102,6 +126,40 @@ describe Mongoid::Revisions do
 
     it "last revision has a single milestone" do
 			@project.revisions.last.milestones.count.should==1
+    end
+
+    it "last revision has a single team" do
+      @project.revisions.last.teams.count.should==1
+    end
+
+		it "original revision has a single team" do
+      @project.teams.count.should==1
+    end
+
+		it "original project has a single note" do
+      @project.notes.count.should==1
+    end
+
+		it "last revision has a single note" do
+			pending # EMBEDDED RELATIONS NOT SUPPORTED (YET)
+      @project.revisions.last.notes.count.should==1
+    end
+
+  	it "last revision has a single version" do
+      pending # EMBEDDED RELATIONS NOT SUPPORTED (YET)
+      @project.revisions.last.version.should_not be_nil
+    end
+
+		it "does not create a new User" do
+			User.count.should==1
+		end
+
+		it "should create a new configuration" do
+			Configuration.count.should==2
+		end
+
+		it "last revision has a single configuration" do
+      @project.revisions.last.configuration.should_not be_nil
     end
   end
 

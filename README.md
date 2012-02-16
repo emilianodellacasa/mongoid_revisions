@@ -86,12 +86,26 @@ Lastly, to modify a revision with a given tag, use
 
 to change the tag attribute of the document and save it in a single call.
 
+## Relations Gotcha
+
+At present time, not all relation types supported by Mongoid get cloned by this gem. 
+
+Here follow a list of all relation types with the indication in they are supported or not:
+
+- has_one : SUPPORTED
+- has_many : SUPPORTED
+- belongs_to : UNSUPPORTED (Doesn't make any sense IMHO, but it will be possible to support it)
+- has_and_belongs_to_many : SUPPORTED (only the relation between the two models gets cloned)
+- embeds_many : UNSUPPORTED
+- embeds_one : UNSUPPORTED
+
 ## Future changes (sort of TODO list)
 
-- Check if linked relations cloning work for all relation's tipologies
 - Recursive revision to linked documents
 - Add methods to access a particular revision or tag
 - Add search method for revision and tag
+- Add support for cloning of "embeds_many" and "embeds_one" relations
+- Add relation blacklist for all relations you don't want to clone
 
 ## Development
 

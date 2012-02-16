@@ -52,14 +52,18 @@ module Mongoid
 				new.tag = "#{new.revision}.0.0"
         new.save
         self.relations.each do |relation|
-          metadata = self.class.reflect_on_association(relation[0])
-          metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
-            new_child = metadata.class_name.constantize.create child.attributes.except("_id")
-            new_child.revision = child.revision+1
-            new_child.tag = "#{new_child.revision}.0.0"
-            new_child[metadata.foreign_key.to_sym]=new.id
-            new_child.save
-          end
+					metadata=relation[1]
+					if metadata[:relation]==Mongoid::Relations::Embedded::Many or metadata[:relation]==Mongoid::Relations::Embedded::One
+						# TODO
+					elsif metadata[:relation]!=Mongoid::Relations::Referenced::In
+						metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
+  	          new_child = metadata.class_name.constantize.create child.attributes.except("_id")
+    	        new_child.revision = child.revision+1
+      	      new_child.tag = "#{new_child.revision}.0.0"
+        	    new_child[metadata.foreign_key.to_sym]=new.id
+	            new_child.save
+  	        end
+					end
         end
         new
 			end
