@@ -19,13 +19,35 @@ module Mongoid
 				# DOES NOTHING
 			end
 
+			# BLOCK ACCESS TO TOKEN ATTRIBUTE
 			def token=(tok)
+				# DOES NOTHING
 			end
 
 			# RETURN ALL REVISIONS FOR THIS DOCUMENT
 			def revisions
 				self.class.where(:token=>self.token).order_by([[:revision,:asc]])
 			end 
+
+			# RETURN A SPECIFIC REVISION
+			def at_revision(revision)
+				self.class.where(:token=>self.token,:revision=>revision.to_i).first
+			end
+
+			# RETURN A SPECIFIC REVISION WITH A SPECIFIC TAG
+			def tagged(tag)
+				self.class.where(:token=>self.token,:tag=>tag).first
+			end
+
+			# RETURN NEXT REVISION
+			def next
+				at_revision(self.revision+1)
+			end
+
+			# RETURN PREVIOUS REVISION
+			def previous
+				at_revision(self.revision-1)
+			end
 
 			# ASSIGN A NEW TAG TO THIS REVISION
 			def tag_revision(tag)

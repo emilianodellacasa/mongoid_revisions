@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mongoid::Revisions do
 	before :all do
+		Project.delete_all
 		@user = User.create!(:username=>"teddy")
 		@project = Project.create!(:name=>"My first project",:user_id=>@user.id)
 		@project.milestones.create!(:description=>"First Milestone")
@@ -160,6 +161,30 @@ describe Mongoid::Revisions do
 
 		it "last revision has a single configuration" do
       @project.revisions.last.configuration.should_not be_nil
+    end
+
+		it "should allow me to access a particular revision" do
+			@project.at_revision(1).revision.should==1
+		end
+
+		it "should allow me to access a particular revision using its tag" do
+			@project.tagged("1.0.0").tag.should=="1.0.0"
+		end
+
+		it "should allow me to navigate to the next revision" do
+			@project.next.revision.should==@project.revision+1
+		end
+
+		it "should allow me to navigate to the previous revision" do
+      @new_revised_project.previous.revision.should==@project.revision
+    end
+
+		it "should me give me nil if there is no next revision" do
+			@new_revised_project.next.should==nil
+		end
+
+		it "should me give me nil if there is no previous revision" do
+			@project.previous.should==nil
     end
   end
 

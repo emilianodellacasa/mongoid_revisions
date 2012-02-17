@@ -86,6 +86,28 @@ Lastly, to modify a revision with a given tag, use
 
 to change the tag attribute of the document and save it in a single call.
 
+### Access a document by a particular revision or tag
+
+ ```ruby
+  @comment.at_revision(2)
+ ```
+
+ ```ruby
+  @comment.tagged("Beta stage")
+ ```
+
+### Navigate thrue revisions
+
+You can navigate thru all revisions of a document by using the 'next' and 'previous' functions:
+
+ ```ruby
+  @comment.next
+ ```
+
+ ```ruby
+  @comment.previous
+ ```
+
 ## Relations Gotcha
 
 At present time, not all relation types supported by Mongoid get cloned by this gem. 
@@ -102,8 +124,7 @@ Here follow a list of all relation types with the indication in they are support
 ## Future changes (sort of TODO list)
 
 - Recursive revision to linked documents
-- Add methods to access a particular revision or tag
-- Add search method for revision and tag
+- Add search method for tag
 - Add support for cloning of "embeds_many" and "embeds_one" relations
 - Add relation blacklist for all relations you don't want to clone
 
