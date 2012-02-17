@@ -1,4 +1,4 @@
-# Mongoid Revisions
+# Mongoid Revisions [![Build Status](https://secure.travis-ci.org/emilianodellacasa/mongoid_revisions.png)](https://secure.travis-ci.org/emilianodellacasa/mongoid_revisions.png)
 
 Add support for revisions to your Mongoid documents
 
