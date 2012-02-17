@@ -88,6 +88,8 @@ to change the tag attribute of the document and save it in a single call.
 
 ### Access a document by a particular revision or tag
 
+You can access a document by its revision or tag by using the following functions:
+
  ```ruby
   @comment.at_revision(2)
  ```
@@ -96,7 +98,7 @@ to change the tag attribute of the document and save it in a single call.
   @comment.tagged("Beta stage")
  ```
 
-### Navigate thrue revisions
+### Navigate thru revisions
 
 You can navigate thru all revisions of a document by using the 'next' and 'previous' functions:
 
