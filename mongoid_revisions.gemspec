@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = MongoidRevisions::VERSION
   s.authors     = ["Emiliano Della Casa"]
   s.email       = ["e.dellacasa@engim.eu"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/emilianodellacasa/mongoid_revisions"
   s.summary     = %q{Add support for revisions to your Mongoid documents}
   s.description = %q{Add support for revisions to your Mongoid documents by creating a new version of a document every time you change it and replicating all of its associations}
 
@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-	s.add_development_dependency "rake"
+  s.add_dependency 'mongoid', '~> 2.4.2'
+  s.add_development_dependency "rake" 
   s.add_development_dependency 'rspec', '~> 2.8.0'
-  s.add_development_dependency 'mongoid', '~> 2.4.2'
   s.add_development_dependency 'bson_ext', '~> 1.5.2'
 end
