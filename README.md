@@ -130,6 +130,8 @@ Here follow a list of all relation types with the indication in they are support
 - Add search method for tag
 - Add support for cloning of "embeds_many" and "embeds_one" relations
 - Add relation blacklist for all relations you don't want to clone
+- Verify if Mongoid:Versioning works when using this gem
+- Verify if Mongoid:Paranoia still works when using this gem
 
 ## Development
 
