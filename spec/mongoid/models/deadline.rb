@@ -1,10 +1,9 @@
-class Milestone
+class Deadline
   include Mongoid::Document
   include Mongoid::Revisions
 
   field :description 
 
-  belongs_to :project
-	has_many :deadlines
+  belongs_to :milestone
 
 end

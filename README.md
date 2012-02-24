@@ -123,9 +123,10 @@ Here follow a list of all relation types with the indication in they are support
 - embeds_many : UNSUPPORTED
 - embeds_one : UNSUPPORTED
 
+**Please note that starting from version 0.0.5 the revision process is recursive, so that if an associated object supports revision then it will undergo revision an so will be with all its associated objects, and so on.**
+
 ## Future changes (sort of TODO list)
 
-- Recursive revision to linked documents
 - Add search method for tag
 - Add support for cloning of "embeds_many" and "embeds_one" relations
 - Add relation blacklist for all relations you don't want to clone

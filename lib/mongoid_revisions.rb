@@ -67,23 +67,25 @@ module Mongoid
 
   	  protected
 
-			def _revise_or_branch(revision,token=nil)
+			def _revise_or_branch(revision,token=nil,attributes=nil)
 				new = self.class.create self.attributes.except("_id")
         new._token = token
         new._revision = revision
 				new.tag = "#{new.revision}.0.0"
+				unless attributes.nil?
+					attributes.each do |key,value|
+						new[key]=value
+					end
+				end
         new.save
-        self.relations.each do |relation|
-					metadata=relation[1]
+        self.relations.each do |name, metadata|
 					if metadata[:relation]==Mongoid::Relations::Embedded::Many or metadata[:relation]==Mongoid::Relations::Embedded::One
 						# TODO
 					elsif metadata[:relation]!=Mongoid::Relations::Referenced::In
 						metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
-  	          new_child = metadata.class_name.constantize.create child.attributes.except("_id")
-    	        new_child.revision = child.revision+1
-      	      new_child.tag = "#{new_child.revision}.0.0"
-        	    new_child[metadata.foreign_key.to_sym]=new.id
-	            new_child.save
+							if child.respond_to?(:revise)
+								child._revise_or_branch(child.revision+1,child.token,{metadata.foreign_key=>new.id})
+							end
   	        end
 					end
         end

@@ -5,7 +5,8 @@ describe Mongoid::Revisions do
 		Project.delete_all
 		@user = User.create!(:username=>"teddy")
 		@project = Project.create!(:name=>"My first project",:user_id=>@user.id)
-		@project.milestones.create!(:description=>"First Milestone")
+		@milestone = @project.milestones.create!(:description=>"First Milestone")
+		@milestone.deadlines.create!(:description=>"First Deadline")
 		@project.create_configuration(:directory_name=>"/opt/project")
 		@project.notes.create!(:text=>"This is a note")
 		@project.create_version(:description=>"1.0.0")
@@ -62,6 +63,10 @@ describe Mongoid::Revisions do
 
 		it "should have a index on token" do
 			Project.index_options.count.should==1
+		end
+
+		it "has a single deadline" do
+			@project.milestones.first.deadlines.count.should==1
 		end
 	end 
 
@@ -185,6 +190,14 @@ describe Mongoid::Revisions do
 
 		it "should me give me nil if there is no previous revision" do
 			@project.previous.should==nil
+    end
+
+		it "should create a new deadline" do
+      Deadline.count.should==2
+    end
+
+		it "last revision has a milestone with a single deadline" do
+      @project.revisions.last.milestones.first.deadlines.count.should==1
     end
   end
 
