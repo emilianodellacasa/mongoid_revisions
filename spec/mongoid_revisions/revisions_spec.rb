@@ -11,6 +11,7 @@ describe Mongoid::Revisions do
 		@project.notes.create!(:text=>"This is a note")
 		@project.create_version(:description=>"1.0.0")
 		@project.teams.create(:name=>"Team A")
+		@milestone = @project.contributors.create!(:username=>"piggy")
 	end
 
 	context "just created" do
@@ -67,6 +68,10 @@ describe Mongoid::Revisions do
 
 		it "has a single deadline" do
 			@project.milestones.first.deadlines.count.should==1
+		end
+
+		it "has a single contributor" do
+			@project.contributors.count.should==1
 		end
 	end 
 
@@ -199,6 +204,14 @@ describe Mongoid::Revisions do
 		it "last revision has a milestone with a single deadline" do
       @project.revisions.last.milestones.first.deadlines.count.should==1
     end
+
+		it "should not create a new contributor" do
+			Contributor.count.should==1
+		end
+
+		it "last revision should have no contributors" do
+			@project.revisions.last.contributors.count.should==0
+		end
   end
 
 	describe "adding a random number of revisions" do

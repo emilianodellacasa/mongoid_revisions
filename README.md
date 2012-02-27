@@ -36,6 +36,10 @@ To add support for revisions to a Mongoid documents, include the module to your 
 - revise
 - branch
 
+### Added Class Method
+
+- revisions
+
 ### Token Field
 
 Token is a randomly generated string that is common to all revisions of the same document and it is write protected to preserve the functionality of this library. 
@@ -73,7 +77,7 @@ and the returned document will have a different token and will be at revision 0.
 To access all revisions for a given document, use
 
  ```ruby
-  @comment.revisions
+  revisions :exclude => [:users,:books]
  ```
 
 ### Tag a revision
@@ -109,6 +113,15 @@ You can navigate thru all revisions of a document by using the 'next' and 'previ
  ```ruby
   @comment.previous
  ```
+
+### Excluding a related object from revisions
+
+Sometimes you don't want that all documents' related objects undergo revisions process. In this case, add the following statement to your class definition
+
+ ```ruby
+  @comment.next
+ ```
+
 
 ## Relations Gotcha
 

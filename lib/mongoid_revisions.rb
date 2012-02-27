@@ -9,6 +9,8 @@ module Mongoid
 				field :tag, :type => String, :default => "0.0.0"
 				field :token, :type => String
 
+				cattr_accessor :exclude_list
+
 				index :token
 
 				set_callback :create, :before, :create_unique_token
@@ -65,6 +67,18 @@ module Mongoid
 				self._revise_or_branch(0)
 			end
 
+			module ClassMethods
+		
+				def revisions(*fields)
+
+					options = fields.extract_options!
+
+					self.exclude_list = options[:exclude] || []
+
+				end
+
+			end
+
   	  protected
 
 			def _revise_or_branch(revision,token=nil,attributes=nil)
@@ -78,15 +92,18 @@ module Mongoid
 					end
 				end
         new.save
+				_exclude_list = self.exclude_list || []
         self.relations.each do |name, metadata|
-					if metadata[:relation]==Mongoid::Relations::Embedded::Many or metadata[:relation]==Mongoid::Relations::Embedded::One
-						# TODO
-					elsif metadata[:relation]!=Mongoid::Relations::Referenced::In
-						metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
-							if child.respond_to?(:revise)
-								child._revise_or_branch(child.revision+1,child.token,{metadata.foreign_key=>new.id})
-							end
-  	        end
+					unless _exclude_list.include?(name.to_sym)
+						if metadata[:relation]==Mongoid::Relations::Embedded::Many or metadata[:relation]==Mongoid::Relations::Embedded::One
+							# TODO
+						elsif metadata[:relation]!=Mongoid::Relations::Referenced::In
+							metadata.class_name.constantize.where(metadata.foreign_key.to_sym=>self.id).each do |child|
+								if child.respond_to?(:revise)
+									child._revise_or_branch(child.revision+1,child.token,{metadata.foreign_key=>new.id})
+								end
+	  	        end
+						end
 					end
         end
         new
