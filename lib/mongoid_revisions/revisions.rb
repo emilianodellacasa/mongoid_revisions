@@ -1,4 +1,3 @@
-require "revisions/version"
 
 module Mongoid
 	module Revisions
