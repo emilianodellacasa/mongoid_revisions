@@ -5,6 +5,7 @@ require "mongoid_revisions/version"
 Gem::Specification.new do |s|
   s.name        = "mongoid_revisions"
   s.version     = MongoidRevisions::VERSION
+	s.platform    = Gem::Platform::RUBY
   s.authors     = ["Emiliano Della Casa"]
   s.email       = ["e.dellacasa@engim.eu"]
   s.homepage    = "http://github.com/emilianodellacasa/mongoid_revisions"

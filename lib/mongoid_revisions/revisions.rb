@@ -1,4 +1,3 @@
-
 module Mongoid
 	module Revisions
 		extend ActiveSupport::Concern
